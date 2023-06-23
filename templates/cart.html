@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<html>
+<head>
+  <title>My Ecommerce Website - Cart</title>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  header {
+  background-color: #333;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  }
+
+  nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+
+  nav ul li {
+    margin: 0 1rem;
+  }
+
+  nav ul li a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  main {
+    max-width: 800px;
+    margin: 2rem auto;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  table th, table td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    text-align: center;
+  }
+  img{
+     border-radius: 0px;
+     width: 80px;
+     height: 80px;
+  }
+
+  table th {
+    background-color: #333;
+  }
+  td{
+    text-align: left;
+  }
+
+  table input {
+    width: 50px;
+    text-align: center;
+  }
+
+  table button {
+    background-color: #f00;
+    color: #fff;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+
+  a {
+    display: inline-block;
+    margin: 1rem;
+    padding: 0.5rem 1rem;
+</style>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+  </head>
+  <body>
+
+       <main>
+      <h2>Your Cart</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Product_id</th>
+            <th>Product Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for i in ci %}
+          <tr>
+            <td class="img"><a href="{{i.prodt.get_url}}"><img src="{{i.prodt.img.url}}" alt="{{i.prodt.name}}"></a></td>
+            <td>ID: {{i.prodt.id}}</td>
+            <td>{{i.prodt.name}}</td>
+            <td>Price {{i.prodt.price}} x 1</td>
+            <td><a href="{% url 'addcart' i.prodt.id %}"><i class="fa fa-plus" style="font-size:11px;color:green"></i></a>&nbsp{{i.quatity}}&nbsp <a href="{% url 'cart_decrement' i.prodt.id %}"><i class="fa fa-minus" style="font-size:11px;color:green"></i></a></td>
+            <td>$ {{i.total}}</td>
+            <td><button><a href="{% url 'remove' i.prodt.id %}">Delete</a></button></td>
+          </tr>
+        {% endfor %}
+
+          <tr>
+            <td bgcolor="green" colspan="3">Total:</td>
+            <td bgcolor="green">$ {{t}}</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <a href="#">Continue Shopping</a>
+      <a href="#">Checkout</a>
+    </main>
+    <footer>
+      <p>&copy; 2023 My Ecommerce Website</p>
+    </footer>
+  </body>
+</html>
+{% endblock %}
